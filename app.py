@@ -6,7 +6,7 @@ import tflite_runtime.interpreter as tflite
 # Load TFLite model
 @st.cache_resource
 def load_model():
-    interpreter = tflite.Interpreter(model_path="model_quant.tflite")
+    interpreter = tf.lite.Interpreter(model_path="model_quant.tflite")
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
@@ -48,4 +48,5 @@ if uploaded_file is not None:
 
     # Show probability chart
     st.bar_chart({class_names[i]: probs[i] for i in range(len(class_names))})
+
 
