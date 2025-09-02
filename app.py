@@ -1,17 +1,17 @@
 import streamlit as st
 import numpy as np
 from PIL import Image
-import tensorflow as tf
+import tflite_runtime.interpreter as tflite
 
 # Load TFLite model
 @st.cache_resource
 def load_model():
-    interpreter = tf.lite.Interpreter(model_path="model_quant.tflite")
+    interpreter = tflite.Interpreter(model_path="model_quant.tflite")
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
     return interpreter, input_details, output_details
-
+    
 # Prediction function
 def predict(img, interpreter, input_details, output_details, class_names):
     img = img.resize((224, 224))  # same size used in training
@@ -48,3 +48,4 @@ if uploaded_file is not None:
 
     # Show probability chart
     st.bar_chart({class_names[i]: probs[i] for i in range(len(class_names))})
+
