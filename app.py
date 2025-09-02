@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 from PIL import Image
-import tflite_runtime.interpreter as tflite
+import tensorflow as tf
 
 # Load TFLite model
 @st.cache_resource
@@ -48,5 +48,6 @@ if uploaded_file is not None:
 
     # Show probability chart
     st.bar_chart({class_names[i]: probs[i] for i in range(len(class_names))})
+
 
 
